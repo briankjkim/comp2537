@@ -1,5 +1,8 @@
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
+
+// set the view engine to ejs
+app.set('view engine', 'ejs');
 
 // => is anonymous function; same as function(err)
 // this is to display error message
@@ -12,7 +15,8 @@ app.get('/', function (req, res) {
 })
 
 app.get('/profile/:id', function (req, res) {
-    
     // console.log(req);
-    res.send(`<h1> GOTTA GET GIT ID is ${req.params.id} </h1>`)
+    res.render("profile.ejs", {
+        "id": req.params.id
+    });
 })
