@@ -1,9 +1,24 @@
 const express = require('express')
 const app = express()
 
-var session = require('express-session')
+var session = require('express-session');
 
-// Use the session middleware
+app.set('view engine', 'ejs');  
+
+
+app.listen(5000, function (err) {
+    if (err) console.log(err);
+})
+
+
+app.get('/profile/:id', function(res, req){
+    res.render("profile.ejs", {
+        "id": req.params.id
+    });
+})
+
+
+// Use the session middleware for basic login/logout feature
 app.use(session({ secret: 'ssshhhhh', saveUninitialized: true, resave: true }));
 
 users = {
@@ -12,9 +27,7 @@ users = {
 }
 
 
-app.listen(5000, function (err) {
-    if (err) console.log(err);
-})
+
 
 app.get('/', function (req, res) {
     if (req.session.authenticated)
@@ -40,3 +53,5 @@ app.get('/login/:user/:pass', function (req, res, next) {
     }
 
 })
+
+app.use(express.static('./public'));
