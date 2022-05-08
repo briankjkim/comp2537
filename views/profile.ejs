@@ -7,6 +7,11 @@
     <title>Document</title>
 </head>
 <body>
-    <h1> Hello! This pokemon has the id: <%= id %> </h1>
+    <h1> Hello!<br> 
+        This pokemon has the id: <%= id %><br>
+        This pokemon has the name: <%= name %><br>
+        This pokemon's HP is: <%= hp %><progress id="file" value="<%= hp %>" max="255"></progress><br>
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/<%= id %>.png">
+    </h1>
 </body>
 </html>
