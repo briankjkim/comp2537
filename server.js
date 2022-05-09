@@ -4,9 +4,11 @@ const https = require('https');
 
 app.set('view engine', 'ejs');
 
-app.listen(5000, function (err) {
-    if (err) console.log(err);
+app.listen(process.env.PORT || 5000, function (err) {
+    if (err)
+        console.log(err);
 })
+
 
 app.get('/profile/:id', function (req, res) {
 
