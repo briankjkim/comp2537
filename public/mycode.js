@@ -34,9 +34,6 @@ async function loadPokemonImages() {
 }
 
 
-
-// `<div class="image_container"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${data.id}.png"></div>`
-
 function setup() {
     loadPokemonImages();
     // event handlers come here
