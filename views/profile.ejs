@@ -12,12 +12,14 @@
 
     <div class="pokemonProfile">
         <div class="pokemonProfileCard">
-            <div class="cardHead">
-                <div class="cardImage">
+            <div class="profileHead">
+                <div class="profileImage">
                     <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/<%= id %>.png">
                 </div>
             </div>
-            <div class="card-name"> <%= name %> </div>
+            <div class="pokemon-name"> <%= name %> </div>
+            <div class="pokemon-id">#<%= id %></div>
+
         </div>
         <table class="pokemonProfileTable">
             <tbody>
@@ -55,14 +57,6 @@
         </table>
 
     </div>
-
-
-    <!-- <h1> Hello!<br> 
-        This pokemon has the id: <%= id %><br>
-        This pokemon has the name: <%= name %><br>
-        This pokemon's HP is: <%= hp %><progress id="file" value="<%= hp %>" max="255"></progress><br>
-        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/<%= id %>.png">
-    </h1> -->
 </body>
 
 </html>

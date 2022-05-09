@@ -24,7 +24,8 @@ app.get('/profile/:id', function (req, res) {
         https_res.on("end", function () {
             data = JSON.parse(data)
 
-
+            poke_types = ''
+          
 
             res.render("profile.ejs", {
                 "id": req.params.id,
