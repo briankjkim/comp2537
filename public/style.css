@@ -2,10 +2,22 @@ body {
     margin: 0px;
 }
 
+
+header {
+    border: 3px solid black;
+    border-radius: 12px;
+    padding: 1%;
+    margin: 1%;
+    background-color: #FFE4E1;
+}
+
 /* Add a black background color to the top navigation bar */
 .topnav {
     overflow: hidden;
     background-color: #F08080;
+    border: 3px solid black;
+    border-radius: 12px;
+    margin: 1%;
 }
 
 /* Style the links inside the navigation bar */
@@ -67,6 +79,9 @@ main {
     flex-direction: row;
     justify-content: center;
     gap: 10px;
+    border: 3px solid black;
+    border-radius: 12px;
+    margin: 1%;
 }
 
 * {
