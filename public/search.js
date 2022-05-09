@@ -1,26 +1,20 @@
-type_global = ""
-
 function processPokemonResp(data) {
     // for each pokemon, check if filtered type matches the actual type
-    for (i = 0; i < data.types.length; i++) {
-        if (data.types[i].type.name == type_global)
-            $("main").append("<p>"+data.id+"</p>")
+    
+    for (i = 0; i < data.pokemon.length; i++){
+        $("main").append("<p>"+data.pokemon[i].pokemon.name+"</p>")
     }
+
 }
 
 
-function display(type_) {
+function display(type_num) {
     $("main").empty()
-    type_global = type_
-    // iterate over first gen pokemons
-    for (i = 1; i <= 151; i++) {
-        $.ajax({
-            type: "get",
-            url: `https://pokeapi.co/api/v2/pokemon/${i}`,
-            success: processPokemonResp
-        })
-    }
-
+    $.ajax({
+        type: "get",
+        url: `https://pokeapi.co/api/v2/type/${type_num}/`,
+        success: processPokemonResp
+    })
 }
 
 
@@ -30,7 +24,6 @@ function setup() {
     $("#poke_type").change(() => {
         poke_type = $("#poke_type option:selected").val();
         display($("#poke_type option:selected").val())
-
     })
 }
 

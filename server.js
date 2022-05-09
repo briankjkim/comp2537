@@ -25,6 +25,8 @@ app.get('/profile/:id', function (req, res) {
             data = JSON.parse(data)
 
             poke_types = ''
+
+            data.filter
           
 
             res.render("profile.ejs", {
