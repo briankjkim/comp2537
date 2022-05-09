@@ -15,14 +15,14 @@ function processPokemonRespByHabitat(data) {
 
 function processPokemonRespByName(data) {
 
-    poke_id = data.id
-
     $("main").append("<div>" + data.name + "</div><br>")
     $("main").append("<div>" + data.id + "</div><br>")
-
-    sprite_html = `<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${poke_id}.png"`
-
-    $("main").append("<div>" + sprite_html + "</div><br>")
+    $("main").append(`
+    <div class="image_container">
+    <a href="/profile/${data.id}">  
+    <img src="${data.sprites.other["official-artwork"].front_default}">
+    </a>
+    </div>`)
 
 
 }
