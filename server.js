@@ -24,16 +24,17 @@ app.get('/profile/:id', function (req, res) {
         https_res.on("end", function () {
             data = JSON.parse(data)
 
-            pokeObj = data.stats.filter((obj_poke)=>{
-                return obj_poke.stat.name == "hp"
-            }).map((obj_poke2)=> {
-                return obj_poke2.base_stat
-            })
+
 
             res.render("profile.ejs", {
                 "id": req.params.id,
                 "name": data.name,
-                "hp":pokeObj[0],
+                "hp": data.stats[0]["base_stat"],
+                "attack": data.stats[1]["base_stat"],
+                "defense": data.stats[2]["base_stat"],
+                "specialAttack": data.stats[3]["base_stat"],
+                "specialDefense": data.stats[4]["base_stat"],
+                "speed": data.stats[5]["base_stat"],
             })
         })
     })
