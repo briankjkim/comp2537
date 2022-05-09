@@ -6,6 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .pokemonProfile {
+            border: 3px solid black;
+            border-radius: 12px;
+            padding: 5px;
+            width: 33%;
+        }
+    </style>
 </head>
 
 <body>
@@ -17,40 +25,55 @@
                     <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/<%= id %>.png">
                 </div>
             </div>
-            <div class="pokemon-name"> <%= name %> </div>
-            <div class="pokemon-id">#<%= id %></div>
+            <div class="pokemon-name">
+                <%= name %>
+            </div>
+            <div class="pokemon-id">#<%= id %>
+            </div>
 
         </div>
         <table class="pokemonProfileTable">
             <tbody>
                 <tr>
                     <td><strong>HP</strong></td>
-                    <td><%= hp %></td>
+                    <td>
+                        <%= hp %>
+                    </td>
                     <td><progress id="file" value="<%= hp %>" max="255"></progress></td>
                 </tr>
                 <tr>
                     <td><strong>Attack</strong></td>
-                    <td><%= attack %></td>
+                    <td>
+                        <%= attack %>
+                    </td>
                     <td><progress id="file" value="<%= attack %>" max="255"></progress></td>
                 </tr>
                 <tr>
                     <td><strong>Defense</strong></td>
-                    <td><%= defense %></td>
+                    <td>
+                        <%= defense %>
+                    </td>
                     <td><progress id="file" value="<%= defense %>" max="255"></progress></td>
                 </tr>
                 <tr>
                     <td><strong>Special Attack</strong></td>
-                    <td><%=specialAttack%></td>
+                    <td>
+                        <%=specialAttack%>
+                    </td>
                     <td><progress id="file" value="<%=specialAttack%>" max="255"></progress></td>
                 </tr>
                 <tr>
                     <td><strong>Special Defense</strong></td>
-                    <td><%=specialDefense%></td>
+                    <td>
+                        <%=specialDefense%>
+                    </td>
                     <td><progress id="file" value="<%=specialDefense%>" max="255"></progress></td>
                 </tr>
                 <tr>
                     <td><strong>Speed</strong></td>
-                    <td><%= speed %></td>
+                    <td>
+                        <%= speed %>
+                    </td>
                     <td><progress id="file" value="<%= speed %>" max="255"></progress></td>
                 </tr>
             </tbody>

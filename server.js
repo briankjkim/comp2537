@@ -22,12 +22,7 @@ app.get('/profile/:id', function (req, res) {
         })
 
         https_res.on("end", function () {
-            data = JSON.parse(data)
-
-            poke_types = ''
-
-            data.filter
-          
+            data = JSON.parse(data)        
 
             res.render("profile.ejs", {
                 "id": req.params.id,
