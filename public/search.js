@@ -13,13 +13,11 @@ function processPokemonRespByHabitat(data) {
 }
 
 function processPokemonRespByName(data) {
-    $("main").append("<div>" + data.name + "</div><br>")
-    $("main").append("<div>" + data.id + "</div><br>")
     $("main").append(`
     <div class="image_container">
-    <a href="/profile/${data.id}">  
     <img src="${data.sprites.other["official-artwork"].front_default}">
-    </a></div>`)
+    </div><a href="/profile/${data.id}">
+    ${data.name} </a>`)
 }
 
 
