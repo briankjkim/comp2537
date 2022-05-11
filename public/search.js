@@ -1,7 +1,6 @@
 function processPokemonRespByType(data) {
-
     for (i = 0; i < data.pokemon.length; i++) {
-        $("main").append("<div>" + data.pokemon[i].pokemon.name + "</div>")
+        $("main").append("<div>" + `<a href="/profile/${data.pokemon[i].pokemon.name}">` + data.pokemon[i].pokemon.name + "</a></div>")
     }
 
 }
@@ -9,22 +8,18 @@ function processPokemonRespByType(data) {
 function processPokemonRespByHabitat(data) {
     // console.log(data)
     for (i = 0; i < data.pokemon_species.length; i++) {
-        $("main").append("<div>" + data.pokemon_species[i].name + "</div>")
+        $("main").append("<div>" + `<a href="/profile/${data.pokemon_species[i].name}">` + data.pokemon_species[i].name + "</a></div>")
     }
 }
 
 function processPokemonRespByName(data) {
-
     $("main").append("<div>" + data.name + "</div><br>")
     $("main").append("<div>" + data.id + "</div><br>")
     $("main").append(`
     <div class="image_container">
     <a href="/profile/${data.id}">  
     <img src="${data.sprites.other["official-artwork"].front_default}">
-    </a>
-    </div>`)
-
-
+    </a></div>`)
 }
 
 
@@ -37,11 +32,11 @@ function display_by_type(type_num) {
     })
 }
 
-function display_by_habitat(type_num) {
+function display_by_habitat(habitat_num) {
     $("main").empty()
     $.ajax({
         type: "get",
-        url: `https://pokeapi.co/api/v2/pokemon-habitat/${type_num}/`,
+        url: `https://pokeapi.co/api/v2/pokemon-habitat/${habitat_num}/`,
         success: processPokemonRespByHabitat
     })
 }

@@ -25,7 +25,7 @@ app.get('/profile/:id', function (req, res) {
             data = JSON.parse(data)        
 
             res.render("profile.ejs", {
-                "id": req.params.id,
+                "id": data.id,
                 "name": data.name,
                 "hp": data.stats[0]["base_stat"],
                 "attack": data.stats[1]["base_stat"],
