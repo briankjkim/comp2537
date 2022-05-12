@@ -1,6 +1,10 @@
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 const https = require('https');
+
+app.use(bodyparser.urlencoded({
+    extended: true
+  }));
 
 app.set('view engine', 'ejs');
 
@@ -38,4 +42,4 @@ app.get('/profile/:id', function (req, res) {
     })
 });
 
-app.use(express.static('./public'))
+app.use(express.static('./public'));
