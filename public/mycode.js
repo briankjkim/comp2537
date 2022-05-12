@@ -17,12 +17,12 @@ async function loadPokemonImages() {
         }
 
         // 1- generate a random number for Pokemon ID so that images can be loaded
-        pokemonRandomID = Math.floor(Math.random() * 150) + 1
+        pokemonRandomID = Math.floor(Math.random() * 8) + 1
 
         // 2- initialize an AJAX request to pokeapi.co
         await $.ajax({
             type: "GET",
-            url: `https://pokeapi.co/api/v2/pokemon/${pokemonRandomID}/`,
+            url: `https://cryptic-wildwood-03560.herokuapp.com/${pokemonRandomID}/`,
             success: processPokeResp
         })
 
