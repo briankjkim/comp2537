@@ -53,7 +53,7 @@ function insertSearchEventToTheTimeLine(data){
     let formatted = now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
 
     $.ajax({
-        url: "https://infinite-atoll-62449.herokuapp.com/timeline/insert",
+        url: "http://localhost:5000/timeline/insert",
         type: "put",
         data: {
             text: ` Client has serched for ${data}`,
@@ -67,7 +67,7 @@ function insertSearchEventToTheTimeLine(data){
 }
 
 
-function setup() {
+await function setup() {
     $("#poke_type").change(() => {
         poke_type = $("#poke_type option:selected").val();
         display_by_type($("#poke_type option:selected").val())

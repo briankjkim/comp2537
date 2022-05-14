@@ -1,9 +1,9 @@
 function loadEvents() {
     $.ajax({
-        url: "https://infinite-atoll-62449.herokuapp.com/timeline/getAllEvents",
+        url: "http://localhost:5000/timeline/getAllEvents",
         type: "get",
         success: (data) => {
-            console.log("time line GET request sent")
+            console.log("timeline GET request sent")
             for (i = 0; i < data.length; i++) {
 
                 $("main").append(
@@ -28,7 +28,7 @@ function loadEvents() {
 function increamentHitsByOne(){
     x = this.id
     $.ajax({
-        url:`https://infinite-atoll-62449.herokuapp.com/timeline/inreaseHits/${x}`,
+        url:`http://localhost:5000/timeline/inreaseHits/${x}`,
         type:"get",
         success: (e)=>{console.log(e)}
     })
