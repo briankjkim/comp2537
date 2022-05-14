@@ -63,7 +63,7 @@ app.put('/timeline/insert', function (req, res) {
     eventModel.create({
         text: req.body.text,
         time: req.body.time,
-        hits: req.body.hits
+        hits: req.body.hits,
     }, function (err, data) {
         if (err) {
             console.log("Error " + err);
