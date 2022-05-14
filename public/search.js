@@ -54,7 +54,7 @@ function insertSearchEventToTheTimeLine(data){
     let formatted = now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
 
     $.ajax({
-        url: "http://0.0.0.0:27017/test/timelineevents/insert",
+        url: "https://infinite-atoll-62449.herokuapp.com/timeline/insert",
         type: "put",
         data: {
             text: ` Client has serched for ${data}`,
