@@ -82,10 +82,6 @@ function setup() {
     })
 
     $("#find_pokemon_by_name").click(search_by_name)
-
-    
-
 }
-
 
 $(document).ready(setup)
