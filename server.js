@@ -77,7 +77,7 @@ app.put('/timeline/insert', function (req, res) {
 
 // Update a timeline event by incrementing hits
 app.get('/timeline/inreaseHits/:id', function (req, res) {
-    console.log(req.params)
+    console.log(req.params + "Update request received")
     eventModel.updateOne({
        _id : req.params.id
     }, {
@@ -95,7 +95,7 @@ app.get('/timeline/inreaseHits/:id', function (req, res) {
 
 // Delete a timeline event from the database with GET Request
 app.get('/timeline/remove/:id', function (req, res) {
-    // console.log(req.params)
+    console.log(`Remove request received for ${req.params.id}`)
     eventModel.remove({
        _id : req.params.id
     }, function (err, data) {
