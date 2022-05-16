@@ -1,11 +1,11 @@
 pokemonGridImages = ''
 
 function processPokeResp(data) {
-    console.log(data)
-    pokemonGridImages += ` ${data.name}
+    console.log(data[0].id)
+    pokemonGridImages += ` ${data[0].name}
       <div class="image_container">
-      <a href="/profile/${data.id}">  
-      <img src="${data.sprites.other["official-artwork"].front_default}">
+      <a href="/profile/${data[0].id}">  
+      <img src="${data[0].sprites.other["official-artwork"].front_default}">
       </a>
       </div>`
 }

@@ -128,14 +128,14 @@ app.get('/profile/:id', function (req, res) {
             data = JSON.parse(data)
 
             res.render("profile.ejs", {
-                "id": data.id,
-                "name": data.name,
-                "hp": data.stats[0]["base_stat"],
-                "attack": data.stats[1]["base_stat"],
-                "defense": data.stats[2]["base_stat"],
-                "specialAttack": data.stats[3]["base_stat"],
-                "specialDefense": data.stats[4]["base_stat"],
-                "speed": data.stats[5]["base_stat"],
+                "id": data[0].id,
+                "name": data[0].name,
+                "hp": data[0].stats[0]["base_stat"],
+                "attack": data[0].stats[1]["base_stat"],
+                "defense": data[0].stats[2]["base_stat"],
+                "specialAttack": data[0].stats[3]["base_stat"],
+                "specialDefense": data[0].stats[4]["base_stat"],
+                "speed": data[0].stats[5]["base_stat"],
             })
         })
     })
