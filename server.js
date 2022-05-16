@@ -16,10 +16,10 @@ app.listen(process.env.PORT || 5000, function (err) {
         console.log(err);
 })
 
-
+// Mongodb address "mongodb+srv://kkjin0330:5VO1M61v9prYQEpp@cluster0.msyad.mongodb.net/hello"
 
 // Connect to mongodb with mongoose module
-mongoose.connect("mongodb://localhost:27017/test", {
+mongoose.connect("mongodb+srv://kkjin0330:5VO1M61v9prYQEpp@cluster0.msyad.mongodb.net/hello", {
     
     useNewUrlParser: true,
     useUnifiedTopology: true
