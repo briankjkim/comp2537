@@ -22,7 +22,7 @@ async function loadPokemonImages() {
         // 2- initialize an AJAX request to my heroku api server
         await $.ajax({
             type: "GET",
-            url: `https://cryptic-wildwood-03560.herokuapp.com/pokemon_by_id/${poke_id}`,
+            url: `https://cryptic-wildwood-03560.herokuapp.com/pokemon_by_id/${pokemonRandomID}`,
             success: processPokeResp
         })
 
