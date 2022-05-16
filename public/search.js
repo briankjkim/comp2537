@@ -24,7 +24,7 @@ function display_by_type(type_num) {
     $("main").empty()
     $.ajax({
         type: "get",
-        url: `https://pokeapi.co/api/v2/type/${type_num}/`,
+        url: `https://cryptic-wildwood-03560.herokuapp.com/pokemon_by_id/${type_num}/`,
         success: processPokemonRespByType
     })
 }

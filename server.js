@@ -115,7 +115,7 @@ app.get('/timeline/remove/:id', function (req, res) {
 // GET Request route for Pokemon Profile page
 app.get('/profile/:id', function (req, res) {
     poke_id = req.params.id;
-    const url = `https://cryptic-wildwood-03560.herokuapp.com/${poke_id}`
+    const url = `https://cryptic-wildwood-03560.herokuapp.com/pokemon_by_id/${poke_id}`
 
     data = ""
 
