@@ -1,7 +1,7 @@
 pokemonGridImages = ''
 
 function processPokeResp(data) {
-    console.log(data.id)
+    console.log(data)
     pokemonGridImages += ` ${data.name}
       <div class="image_container">
       <a href="/profile/${data.id}">  
