@@ -1,5 +1,5 @@
 function processPokemonRespByType(data) {
-    console.log(data);
+    console.log(data[0]);
     for (i = 0; i < data[0].pokemon.length; i++) {
         $("main").append("<div>" + `<a href="/profile/${data[0].pokemon[i].pokemon.id}">` + data[0].pokemon[i].pokemon.name + "</a></div>")
     }
@@ -8,7 +8,7 @@ function processPokemonRespByType(data) {
 
 function processPokemonRespByHabitat(data) {
     for (i = 0; i < data.pokemon_species.length; i++) {
-        $("main").append("<div>" + `<a href="/profile/${data.pokemon_species[i].id}">` + data.pokemon_species[i].name + "</a></div>")
+        $("main").append("<div>" + `<a href="/profile/${data[0].pokemon_species[i].id}">` + data[0].pokemon_species[i].name + "</a></div>")
     }
 }
 
