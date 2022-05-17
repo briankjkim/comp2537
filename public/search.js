@@ -1,6 +1,7 @@
 function processPokemonRespByType(data) {
-    for (i = 0; i < data.pokemon.length; i++) {
-        $("main").append("<div>" + `<a href="/profile/${data.pokemon[i].pokemon.id}">` + data.pokemon[i].pokemon.name + "</a></div>")
+    console.log(data);
+    for (i = 0; i < data[0].pokemon.length; i++) {
+        $("main").append("<div>" + `<a href="/profile/${data[0].pokemon[i].pokemon.id}">` + data[0].pokemon[i].pokemon.name + "</a></div>")
     }
 
 }
@@ -24,7 +25,7 @@ function display_by_type(type_num) {
     $("main").empty()
     $.ajax({
         type: "get",
-        url: `https://cryptic-wildwood-03560.herokuapp.com/pokemon_by_id/${type_num}/`,
+        url: `https://cryptic-wildwood-03560.herokuapp.com/pokemon_by_type/${type_num}/`,
         success: processPokemonRespByType
     })
 }
