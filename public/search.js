@@ -34,7 +34,7 @@ function display_by_habitat(habitat_num) {
     $("main").empty()
     $.ajax({
         type: "get",
-        url: `https://pokeapi.co/api/v2/pokemon-habitat/${habitat_num}/`,
+        url: `https://cryptic-wildwood-03560.herokuapp.com/pokemon_by_habitat/${habitat_num}/`,
         success: processPokemonRespByHabitat
     })
 }
