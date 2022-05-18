@@ -49,7 +49,7 @@ function search_by_name() {
     })
 }
 
-function insertSearchEventToTheTimeLine(data){
+function insertSearchEventToTheTimeLine(data) {
     let now = new Date(Date.now());
     let formatted = now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
 
@@ -57,11 +57,11 @@ function insertSearchEventToTheTimeLine(data){
         url: "https://infinite-atoll-62449.herokuapp.com/timeline/insert",
         type: "put",
         data: {
-            text: ` Client has serched for ${data}`,
+            text: `Client has serched for ${data}`,
             time: `at time ${formatted}`,
             hits: 1
         },
-        success: function(res){
+        success: function (res) {
             console.log(res)
         }
     })
@@ -70,18 +70,19 @@ function insertSearchEventToTheTimeLine(data){
 
 function setup() {
     $("#poke_type").change(() => {
-        poke_type = $("#poke_type option:selected").val();
-        display_by_type($("#poke_type option:selected").val())
-        insertSearchEventToTheTimeLine(poke_type)
+        display_by_type($("#poke_type option:selected").val());
+        insertSearchEventToTheTimeLine($("#poke_type option:selected").text());
     })
 
     $("#poke_habitat").change(() => {
-        poke_habitat = $("#poke_habitat option:selected").val();
-        display_by_habitat($("#poke_habitat option:selected").val())
-        insertSearchEventToTheTimeLine(poke_habitat)
+        display_by_habitat($("#poke_habitat option:selected").val());
+        insertSearchEventToTheTimeLine($("#poke_type option:selected").text())
     })
 
-    $("#find_pokemon_by_name").click(search_by_name)
+    $("#find_pokemon_by_name").click(() => {
+        search_by_name;
+        insertSearchEventToTheTimeLine($("#poke_name").val());
+    })
 }
 
 $(document).ready(setup)
