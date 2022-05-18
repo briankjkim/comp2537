@@ -1,0 +1,6 @@
+.pokemonProfile {
+    border: 3px solid black;
+    border-radius: 12px;
+    padding: 5px;
+    width: 33%;
+}
