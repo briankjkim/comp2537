@@ -1,14 +1,14 @@
 function processPokemonRespByType(data) {
-    console.log(data[0]);
-    for (i = 0; i < data[0].pokemon.length; i++) {
-        $("main").append("<div>" + `<a href="/profile/${data[0].pokemon[i].pokemon.id}">` + data[0].pokemon[i].pokemon.name + "</a></div>")
+    console.log(data);
+    for (i = 0; i < data.pokemon.length; i++) {
+        $("main").append("<div>" + `<a href="/profile/${data.pokemon[i].pokemon.id}">` + data.pokemon[i].pokemon.name + "</a></div>")
     }
 
 }
 
 function processPokemonRespByHabitat(data) {
-    for (i = 0; i < data[0].pokemon_species.length; i++) {
-        $("main").append("<div>" + data[0].pokemon_species[i].name + "</div>")
+    for (i = 0; i < data.pokemon_species.length; i++) {
+        $("main").append("<div>" + data.pokemon_species[i].name + "</div>")
     }
 }
 
@@ -25,7 +25,7 @@ function display_by_type(type_num) {
     $("main").empty()
     $.ajax({
         type: "get",
-        url: `https://cryptic-wildwood-03560.herokuapp.com/pokemon_by_type/${type_num}/`,
+        url: `https://pokeapi.co/api/v2/type/${type_num}/`,
         success: processPokemonRespByType
     })
 }
@@ -34,7 +34,7 @@ function display_by_habitat(habitat_num) {
     $("main").empty()
     $.ajax({
         type: "get",
-        url: `https://cryptic-wildwood-03560.herokuapp.com/pokemon_by_habitat/${habitat_num}/`,
+        url: `https://pokeapi.co/api/v2/pokemon-habitat/${habitat_num}/`,
         success: processPokemonRespByHabitat
     })
 }
