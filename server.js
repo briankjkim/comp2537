@@ -8,12 +8,14 @@ const cors = require('cors');
 // var session = require('express-session')
 // app.use(session({ secret: 'ssshhhhh', saveUninitialized: true, resave: true }));
 
-
+// use cross origin cors
 app.use(cors());
 
-
+// set view engine for ejs
 app.set('view engine', 'ejs');
 
+
+// open the port for nodemon and heroku
 app.listen(process.env.PORT || 5000, function (err) {
     if (err)
         console.log(err);
@@ -38,7 +40,7 @@ const eventSchema = new mongoose.Schema({
 // Create eventModel for mongoose module
 const eventModel = mongoose.model("timelineevents", eventSchema);
 
-
+// use body-parser
 app.use(bodyparser.urlencoded({
     parameterLimit: 100000,
     limit: '50mb',
@@ -47,7 +49,7 @@ app.use(bodyparser.urlencoded({
 
 
 
-
+// Timeline Event Routes
 // READ timeline data from the server with GET Request
 app.get('/timeline/getAllEvents', function (req, res) {
     console.log("Received a GET request for timeline database");
@@ -60,7 +62,6 @@ app.get('/timeline/getAllEvents', function (req, res) {
         res.send(data);
     });
 })
-
 
 // CREATE a timeline event to the data with PUT Request
 app.put('/timeline/insert', function (req, res) {
@@ -80,7 +81,6 @@ app.put('/timeline/insert', function (req, res) {
     });
 })
 
-
 // Update a timeline event by incrementing hits
 app.get('/timeline/inreaseHits/:id', function (req, res) {
     console.log(req.params + "Update request received")
@@ -98,7 +98,6 @@ app.get('/timeline/inreaseHits/:id', function (req, res) {
     });
 })
 
-
 // Delete a timeline event from the database with GET Request
 app.get('/timeline/remove/:id', function (req, res) {
     console.log(`Remove request received for ${req.params.id}`)
@@ -113,7 +112,6 @@ app.get('/timeline/remove/:id', function (req, res) {
         res.send("Event is deleted");
     });
 })
-
 
 // GET Request route for Pokemon Profile page
 app.get('/profile/:id', function (req, res) {
@@ -143,7 +141,6 @@ app.get('/profile/:id', function (req, res) {
         })
     })
 });
-
 
 // Route for displaying static pages in public folder
 app.use(express.static('./public'));
