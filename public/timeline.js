@@ -54,7 +54,7 @@ function setup() {
     loadEvents()
 
     $("body").on('click', '.likeButton', increamentHitsByOne)
-    $("body").on('click', '.removeButton', increamentHitsByOne)
+    $("body").on('click', '.removeButton', removeTimelineEvents)
 
 }
 
