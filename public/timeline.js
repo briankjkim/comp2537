@@ -43,7 +43,7 @@ function increamentHitsByOne(){
 function removeTimelineEvents(){
     x = this.id
     $.ajax({
-        url:`https://infinite-atoll-62449.herokuapp.com//timeline/remove/${x}`,
+        url:`https://infinite-atoll-62449.herokuapp.com/timeline/remove/${x}`,
         type:"get",
         success: (server_response)=>{console.log(server_response)}
     })
