@@ -1,11 +1,11 @@
 pokemonGridImages = ''
 
 function processPokeResp(data) {
-    console.log(data[0].id)
-    pokemonGridImages += ` ${data[0].name}
+    console.log(data.id)
+    pokemonGridImages += ` ${data.name}
       <div class="image_container">
-      <a href="/profile/${data[0].id}">  
-      <img src="${data[0].sprites.other["official-artwork"].front_default}">
+      <a href="/profile/${data.id}">  
+      <img src="${data.sprites.other["official-artwork"].front_default}">
       </a>
       </div>`
 }
@@ -17,12 +17,12 @@ async function loadPokemonImages() {
         }
 
         // 1- generate a random number for Pokemon ID so that images can be loaded
-        pokemonRandomID = Math.floor(Math.random() * 28) + 1
+        pokemonRandomID = Math.floor(Math.random() * 300) + 1
 
         // 2- initialize an AJAX request to my heroku api server
         await $.ajax({
             type: "GET",
-            url: `https://cryptic-wildwood-03560.herokuapp.com/pokemon_by_id/${pokemonRandomID}`,
+            url: `https://pokeapi.co/api/v2/pokemon/${pokemonRandomID}`,
             success: processPokeResp
         })
 
