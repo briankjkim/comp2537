@@ -1,14 +1,13 @@
 function processPokemonRespByType(data) {
-    console.log(data);
     for (i = 0; i < data.pokemon.length; i++) {
-        $("main").append("<div>" + `<a href="/profile/${data.pokemon[i].pokemon.id}">` + data.pokemon[i].pokemon.name + "</a></div>")
+        $("main").append("<div>" + `<a href="/profile/${data.pokemon[i].pokemon.name}">` + data.pokemon[i].pokemon.name + "</a></div>")
     }
 
 }
 
 function processPokemonRespByHabitat(data) {
     for (i = 0; i < data.pokemon_species.length; i++) {
-        $("main").append(`<div> <a href="/profile/${data.pokemon_species[i].name}"> + ${data.pokemon[i].pokemon.name} + </a></div>`)
+        $("main").append(`<div> <a href="/profile/${data.pokemon_species[i].id}"> ${data.pokemon_species[i].name} </a></div>`)
     }
 }
 
@@ -76,7 +75,7 @@ function setup() {
 
     $("#poke_habitat").change(() => {
         display_by_habitat($("#poke_habitat option:selected").val());
-        insertSearchEventToTheTimeLine($("#poke_type option:selected").text())
+        insertSearchEventToTheTimeLine($("#poke_habitat option:selected").text())
     })
 
     $("#find_pokemon_by_name").click(() => {
