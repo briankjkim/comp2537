@@ -5,6 +5,9 @@ const mongoose = require('mongoose');
 const bodyparser = require("body-parser");
 const cors = require('cors');
 
+// var session = require('express-session')
+// app.use(session({ secret: 'ssshhhhh', saveUninitialized: true, resave: true }));
+
 
 app.use(cors());
 
