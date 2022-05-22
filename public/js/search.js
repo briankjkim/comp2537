@@ -39,13 +39,14 @@ function display_by_habitat(habitat_num) {
 }
 
 function search_by_name() {
-    $("main").empty()
-    search_term = $("#poke_name").val()
+    $("main").empty();
+    search_term = $("#poke_name").val();
+    console.log(search_term);
     $.ajax({
         type: "get",
         url: `https://pokeapi.co/api/v2/pokemon/${search_term}/`,
         success: processPokemonRespByName
-    })
+    });
 }
 
 function insertSearchEventToTheTimeLine(data) {
@@ -79,7 +80,7 @@ function setup() {
     })
 
     $("#find_pokemon_by_name").click(() => {
-        search_by_name;
+        search_by_name();
         insertSearchEventToTheTimeLine($("#poke_name").val());
     })
 }
