@@ -19,9 +19,7 @@ initializePassport(
   id => users.find(user => user.id === id)
 )
 
-
 const users = []
-
 
 // use cross origin cors
 app.use(cors());
@@ -81,12 +79,16 @@ const eventModel = mongoose.model("timelineevents", eventSchema);
 // const userSchema = new mongoose.Schema({
 //     username: String,
 //     password: String,
+//     useremail: String,
 //     shoppingCart: Array,
 // });
 
 
 // // Create userModel for mongoose module
 // const userModel = mongoose.model("users", userSchema);
+
+
+// const users = userModel
 
 
 // use body-parser
@@ -100,7 +102,7 @@ app.use(bodyparser.urlencoded({
 // Show home route
 app.get('/', checkAuthenticated, (req, res) => {
     res.render('index.ejs', {
-        "username": req.session.user,
+        "username": req.user.name,
     })
   })
 
@@ -114,12 +116,24 @@ app.get('/register', checkNotAuthenticated, (req, res) => {
 app.post('/register', checkNotAuthenticated, async (req, res) => {
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, 10)
+        // userModel.create({
+        //     username: req.body.name,
+        //     useremail: req.body.email,
+        //     password: hashedPassword
+        // }), function (err, data) {
+        //     if (err) {
+        //         console.log("Error " + err);
+        //     } else {
+        //         console.log("Data " + data);
+        //     }
+        //     res.redirect('/');
+        // }
         users.push({
             id: Date.now().toString(),
             name: req.body.name,
             email: req.body.email,
             password: hashedPassword
-        })
+          })
         res.redirect('/login')
     } catch {
         res.redirect('/register')
@@ -151,7 +165,6 @@ function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next()
     }
-
     res.redirect('/login')
 }
 
@@ -161,15 +174,6 @@ function checkNotAuthenticated(req, res, next) {
     }
     next()
 }
-
-
-// Show User Profile Page
-app.get('/userProfile/', checkAuthenticated, function (req, res) {
-    res.render('userProfile.ejs', {
-        username: req.session.user,
-    })
-})
-
 
 
 // Timeline Event Routes
