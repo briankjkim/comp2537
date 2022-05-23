@@ -4,27 +4,28 @@ const https = require('https');
 const mongoose = require('mongoose');
 const bodyparser = require("body-parser");
 const cors = require('cors');
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const passportLocalMongoose = require("passport-local-mongoose");
+const User = require("./models/user");
 
 
 
 // Use Session Middleware for login component
-let session = require('express-session');
-app.use(session({
-    secret: 'brianhello',
-    saveUninitialized: true,
-    resave: true
+app.use(require("express-session")({
+    secret: "this course is a mess",
+    resave: false,
+    saveUninitialized: false
 }));
 
-// Auth function to track user authentication
-function auth(req, res, next) {
-    if (req.session.authenticated) {
-        next();
-        console.log("auth middleware is triggered");
-    } else {
-        console.log("User is not signed");
-        res.redirect('/login');
-    }
-}
+// use passport authentication middleware for node.js
+app.use(passport.initialize());
+app.use(passport.session());
+ 
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 
 
 // use cross origin cors
@@ -84,26 +85,34 @@ app.use(bodyparser.urlencoded({
     extended: true
 }));
 
-// Nabil's code
-users = [{
-    username: "user1",
-    password: "pass1",
-    shoppingCart: [{
-        pokeID: 25,
-        price: 13,
-        quantity: 2
-    }, {
+// Showing user profile page
+app.get("/userProfile", isLoggedIn, function (req, res) {
+    res.render("secret");
+});
 
-        pokeID: 35,
-        price: 40,
-        quantity: 5
-    }]
+// Showing register form
+app.get("/register", function (req, res) {
+    res.render("register");
+});
 
-}, {
+// Handling user signup
+app.post("/register", function (req, res) {
+    let username = req.body.username
+    let password = req.body.password
+    User.register(new User({ username: username }),
+            password, function (err, user) {
+        if (err) {
+            console.log(err);
+            return res.render("register");
+        }
+ 
+        passport.authenticate("local")(
+            req, res, function () {
+            res.render("secret");
+        });
+    });
+});
 
-    username: "user2",
-    password: "pass2"
-}]
 
 //Showing login form
 app.get("/login", function (req, res) {
@@ -111,29 +120,25 @@ app.get("/login", function (req, res) {
 });
  
 
-// Handle User Profile 
-app.get('/userProfile/:id', auth, function (req, res) {
-    res.render("userProfile.ejs", {
-        "username": req.params.id,
-        // "shoppingCart": JSON.stringify(users.filter(user => user.username == req.params.id)[0].shoppingCart),
-    })
-})
+//Handling user login
+app.post("/login", passport.authenticate("local", {
+    successRedirect: "/secret",
+    failureRedirect: "/login"
+}), function (req, res) {
+});
 
 
-app.post('/login', function (req, res, next) {
-    function hh (req) {
-        return users.username == req.body.username
-    }
-    if(users.filter(hh)[0].password == req.body.password){
-        req.session.authenticated = true
-        req.session.user = req.params.user
-        res.redirect(`/userProfile/${req.params.user}`)
-    } else {
-        req.session.authenticated = false
-        res.send("Failed Login!")
-    }
+//Handling user logout
+app.get("/logout", function (req, res) {
+    req.logout();
+    res.redirect("/");
+});
 
-})
+
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated()) return next();
+    res.redirect("/login");
+}
 
 
 // Timeline Event Routes
