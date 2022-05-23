@@ -5,8 +5,27 @@ const mongoose = require('mongoose');
 const bodyparser = require("body-parser");
 const cors = require('cors');
 
-// var session = require('express-session')
-// app.use(session({ secret: 'ssshhhhh', saveUninitialized: true, resave: true }));
+
+
+// Use Session Middleware for login component
+let session = require('express-session');
+app.use(session({
+    secret: 'brianhello',
+    saveUninitialized: true,
+    resave: true
+}));
+
+// Auth function to track user authentication
+function auth(req, res, next) {
+    if (req.session.authenticated) {
+        next();
+        console.log("auth middleware is triggered");
+    } else {
+        console.log("User is not signed");
+        res.redirect('/login');
+    }
+}
+
 
 // use cross origin cors
 app.use(cors());
@@ -24,21 +43,39 @@ app.listen(process.env.PORT || 5000, function (err) {
 // Mongodb address "mongodb+srv://kkjin0330:5VO1M61v9prYQEpp@cluster0.msyad.mongodb.net/hello"
 
 // Connect to mongodb with mongoose module
-mongoose.connect("mongodb+srv://kkjin0330:5VO1M61v9prYQEpp@cluster0.msyad.mongodb.net/hello", {
-    
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
+const dbAddress = "mongodb+srv://kkjin0330:5VO1M61v9prYQEpp@cluster0.msyad.mongodb.net/hello"
+mongoose
+    .connect(dbAddress, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    })
+    .then(() => console.log("MongoDB Connected"))
+    .catch((err) => console.log(err));
 
-// Create eventScheme for timeline events
+
+// Create eventSchema for timeline events
 const eventSchema = new mongoose.Schema({
     text: String,
     hits: Number,
     time: String
 });
 
+
 // Create eventModel for mongoose module
 const eventModel = mongoose.model("timelineevents", eventSchema);
+
+
+// // Create userSchema for user authentication
+// const userSchema = new mongoose.Schema({
+//     username: String,
+//     password: String,
+//     shoppingCart: Array,
+// });
+
+
+// // Create userModel for mongoose module
+// const userModel = mongoose.model("users", userSchema);
+
 
 // use body-parser
 app.use(bodyparser.urlencoded({
@@ -47,6 +84,56 @@ app.use(bodyparser.urlencoded({
     extended: true
 }));
 
+// Nabil's code
+users = [{
+    username: "user1",
+    password: "pass1",
+    shoppingCart: [{
+        pokeID: 25,
+        price: 13,
+        quantity: 2
+    }, {
+
+        pokeID: 35,
+        price: 40,
+        quantity: 5
+    }]
+
+}, {
+
+    username: "user2",
+    password: "pass2"
+}]
+
+//Showing login form
+app.get("/login", function (req, res) {
+    res.render("login");
+});
+ 
+
+// Handle User Profile 
+app.get('/userProfile/:id', auth, function (req, res) {
+    res.render("userProfile.ejs", {
+        "username": req.params.id,
+        // "shoppingCart": JSON.stringify(users.filter(user => user.username == req.params.id)[0].shoppingCart),
+    })
+})
+
+
+app.post('/login', function (req, res, next) {
+    function hh (req) {
+        return users.username == req.body.username
+    }
+    if(users.filter(hh)[0].password == req.body.password){
+        req.session.authenticated = true
+        req.session.user = req.params.user
+        res.redirect(`/userProfile/${req.params.user}`)
+    } else {
+        req.session.authenticated = false
+        res.send("Failed Login!")
+    }
+
+})
 
 
 // Timeline Event Routes
@@ -85,9 +172,11 @@ app.put('/timeline/insert', function (req, res) {
 app.get('/timeline/inreaseHits/:id', function (req, res) {
     console.log(req.params + "Update request received")
     eventModel.updateOne({
-       _id : req.params.id
+        _id: req.params.id
     }, {
-        $inc : { hits: 1}
+        $inc: {
+            hits: 1
+        }
     }, function (err, data) {
         if (err) {
             console.log("Error " + err);
@@ -102,7 +191,7 @@ app.get('/timeline/inreaseHits/:id', function (req, res) {
 app.get('/timeline/remove/:id', function (req, res) {
     console.log(`Remove request received for ${req.params.id}`)
     eventModel.remove({
-       _id : req.params.id
+        _id: req.params.id
     }, function (err, data) {
         if (err) {
             console.log("Error " + err);
