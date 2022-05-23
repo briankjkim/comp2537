@@ -52,11 +52,13 @@ app.listen(process.env.PORT || 5000, function (err) {
 })
 
 
+
+// Show home route
 app.get('/', function (req, res) {
     if (req.cookies.x_auth) {
         res.sendFile(__dirname + '/public/index.html');
     } else {
-        console.log("Hello, I am stressful.");
+        console.log("user not signed");
         res.render('login.ejs');
     }
 })
