@@ -99,7 +99,9 @@ app.use(bodyparser.urlencoded({
 
 // Show home route
 app.get('/', checkAuthenticated, (req, res) => {
-    res.render('index.html')
+    res.render('index.ejs', {
+        "username": req.session.user,
+    })
   })
 
 
@@ -132,8 +134,8 @@ app.get('/login', checkNotAuthenticated, (req, res) => {
 
 // Handling login 
 app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-    successRedirect: '/index.html',
-    failureRedirect: '/login',
+    successRedirect: '/',
+    failureRedirect: '/register',
     failureFlash: true
 }))
 

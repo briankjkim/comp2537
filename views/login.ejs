@@ -26,17 +26,27 @@
                 <input type="text" id="poke_name" placeholder="Search a Pokemon by name" />
             </div>
         </nav>
+
+
+        <h1>Login</h1>
+        <% if (messages.error) { %>
+            <%= messages.error %>
+          <% } %>
+
+        
         <div id="login_form">
-            <form class="form-inline" action="/login" method="POST">
-                <label for="username">Username:</label>
-                <input type="username" id="username" placeholder="Enter Your ID" name="username">
-                <label for="user_pwd">Password:</label>
-                <input type="user_pwd" id="user_pwd" placeholder="Enter password" name="user_pwd">
-                <label>
-                    <input type="checkbox" name="remember"> Remember me
-                </label>
-                <button type="submit">Submit</button>
-            </form>
+            <form action="/login" method="POST">
+                <div>
+                  <label for="email">Email</label>
+                  <input type="email" id="email" name="email" required>
+                </div>
+                <div>
+                  <label for="password">Password</label>
+                  <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit">Login</button>
+              </form>
+              <a href="/register">Register</a>
         </div>
 
         <footer>
