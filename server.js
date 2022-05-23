@@ -43,17 +43,6 @@ app.listen(process.env.PORT || 5000, function (err) {
 })
 
 
-
-// Show home route
-app.get('/', function (req, res) {
-    if (req.cookies.x_auth) {
-        res.sendFile(__dirname + '/public/index.html');
-    } else {
-        console.log("user not signed");
-        res.render('login.ejs');
-    }
-})
-
 // Mongodb address "mongodb+srv://kkjin0330:5VO1M61v9prYQEpp@cluster0.msyad.mongodb.net/hello"
 
 // Connect to mongodb with mongoose module
@@ -79,22 +68,6 @@ const eventSchema = new mongoose.Schema({
 const eventModel = mongoose.model("timelineevents", eventSchema);
 
 
-
-// Create userSchema for user authentication
-const userSchema = new mongoose.Schema({
-    username: String,
-    password: String,
-    useremail: String,
-    shoppingCart: Array,
-});
-
-
-// Create userModel for mongoose module
-const userModel = mongoose.model("users", userSchema);
-
-
-
-
 // use body-parser
 app.use(bodyparser.urlencoded({
     parameterLimit: 100000,
@@ -104,81 +77,116 @@ app.use(bodyparser.urlencoded({
 
 
 // Show home route
-app.get('/', checkAuthenticated, (req, res) => {
-    res.render('index.ejs', {
-        "username": req.user.name,
-    })
-  })
-
-
-// Showing register form
-app.get('/register', checkNotAuthenticated, (req, res) => {
-    res.render('register.ejs')
-})
-
-// Handle register 
-app.post('/register', checkNotAuthenticated, async (req, res) => {
-    try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10)
-        // userModel.create({
-        //     username: req.body.name,
-        //     useremail: req.body.email,
-        //     password: hashedPassword
-        // }), function (err, data) {
-        //     if (err) {
-        //         console.log("Error " + err);
-        //     } else {
-        //         console.log("Data " + data);
-        //     }
-        //     res.redirect('/');
-        // }
-        users.push({
-            id: Date.now().toString(),
-            name: req.body.name,
-            email: req.body.email,
-            password: hashedPassword
-          })
-        res.redirect('/login')
-    } catch {
-        res.redirect('/register')
+app.get('/', function (req, res) {
+    if (req.cookies.x_auth) {
+        res.sendFile(__dirname + '/public/index.html');
+    } else {
+        console.log("User is not signed in");
+        res.sendFile(__dirname + '/public/login.html');
     }
 })
 
+// Handle login
+app.post("/doLogin", (req, res) => {
+    User.findOne({ ID: req.body.ID }, (err, user) => {
+        if (err || !user) {
+            alert("Invalid ID!");
+            return res.sendFile(__dirname + '/public/signup.html');
+        }
+        user
+            .comparePassword(req.body.password)
+            .then((isMatch) => {
+                if (!isMatch) {
+                    alert("Invalid Password!");
+                    return res.sendFile(__dirname + '/public/signup.html');
+                }
+                user
+                    .generateToken()
+                    .then((user) => {
+                        res.cookie("userNickName", user.nickname);
+                        res.cookie("x_auth", user.token);
+                        res.sendFile(__dirname + '/public/index.html');
+                    })
+                    .catch((err) => {
+                        res.status(400).send(err);
+                    });
+            })
+            .catch((err) => res.json({ loginSuccess: false, err }));
+    });
+});
 
-//Showing login form
-app.get('/login', checkNotAuthenticated, (req, res) => {
-    res.render('login.ejs')
-})
 
-// Handling login 
-app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/register',
-    failureFlash: true
-}))
-
-
-// Handling user logout
-app.delete('/logout', (req, res) => {
-    req.logOut()
-    res.redirect('/login')
-})
-
-// Session middleware
-function checkAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next()
-    }
-    res.redirect('/login')
-}
-
-function checkNotAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
+// Handle register
+app.post("/doJoin", (req, res) => {
+    const user = new User(req.body);
+    user.save((err, userInfo) => {
+        if (err) return res.sendFile(__dirname + '/public/signup.html');
         return res.redirect('/')
-    }
-    next()
-}
+    });
+});
 
+
+// Middleware for auth
+app.get("/api/user/auth", auth, (req, res) => {
+    res.status(200).json({
+        _id: req._id,
+        isAuth: true,
+        email: req.user.email,
+        name: req.user.name,
+        nickname: req.user.nickname,
+        cellphone: req.user.cellphone,
+    });
+});
+
+// Handle log out
+app.post("/logout", auth, (req, res) => {
+
+    User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, user) => {
+        if (err) return res.json({ success: false, err });
+        res.clearCookie("x_auth");
+        return res.sendFile(__dirname + '/public/login.html');
+    });
+});
+
+
+const shoppingCartSchema = new mongoose.Schema({
+    userID: String,
+    pokeID: Number,
+    quantity: Number,
+    time: String,
+    price: Number,
+});
+
+const shoppingCartModel = mongoose.model("shoppingCart", shoppingCartSchema);
+
+
+// Show shopping cart
+app.get('/getShoppingCart', (req, res)  => {
+    shoppingCartModel.find().then(results => {
+        res.render('userProfile.ejs', { result: results })
+    })
+    .catch(err => console.error(error))
+})
+
+
+// Add items to shopping cart
+app.post('/profile/:id/addItem', auth, (req, res) => {
+    let today = new Date();
+    shoppingCartModel.create({
+        userID: req.user.ID,
+        pokeID: req.body.pokID,
+        quantity: req.body.quantity,
+        time: today,
+        price: req.body.price
+    }, function (err, data) {
+        if (err) {
+          console.log("Error " + err);
+        } else {
+          console.log("Data " + data);
+        }
+        console.log("Insertion is successful");
+      });
+})
 
 // Timeline Event Routes
 // READ timeline data from the server with GET Request
