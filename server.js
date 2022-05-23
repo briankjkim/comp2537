@@ -4,8 +4,9 @@ const https = require('https');
 const mongoose = require('mongoose');
 const bodyparser = require("body-parser");
 const cors = require('cors');
-const bcrypt = require('bcrypt')
 
+
+const bcrypt = require('bcrypt')
 const passport = require('passport')
 const flash = require('express-flash')
 const session = require('express-session')
