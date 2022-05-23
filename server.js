@@ -5,6 +5,18 @@ const mongoose = require('mongoose');
 const bodyparser = require("body-parser");
 const cors = require('cors');
 
+const req = require('express/lib/request');
+const res = require('express/lib/response');
+const cookieParser = require("cookie-parser");
+
+const { User } = require("./public/models/User");
+const { auth } = require("./public/middleware/auth");
+
+var url = require('url');
+const { request } = require('http');
+
+app.use(bodyparser.json());
+app.use(cookieParser());
 
 const bcrypt = require('bcrypt')
 const passport = require('passport')
@@ -22,7 +34,12 @@ initializePassport(
 const users = []
 
 // use cross origin cors
-app.use(cors());
+app.use(
+    cors({
+        origin: true,
+        credentials: true,
+    })
+);
 
 // set view engine for ejs
 app.set('view engine', 'ejs');
@@ -33,6 +50,17 @@ app.listen(process.env.PORT || 5000, function (err) {
     if (err)
         console.log(err);
 })
+
+
+app.get('/', function (req, res) {
+    if (req.cookies.x_auth) {
+        res.sendFile(__dirname + '/public/index.html');
+    } else {
+        console.log("Hello, I am stressful.");
+        res.render('login.ejs');
+    }
+})
+
 
 
 // Passport codes
@@ -75,20 +103,19 @@ const eventModel = mongoose.model("timelineevents", eventSchema);
 
 
 
-// // Create userSchema for user authentication
-// const userSchema = new mongoose.Schema({
-//     username: String,
-//     password: String,
-//     useremail: String,
-//     shoppingCart: Array,
-// });
+// Create userSchema for user authentication
+const userSchema = new mongoose.Schema({
+    username: String,
+    password: String,
+    useremail: String,
+    shoppingCart: Array,
+});
 
 
-// // Create userModel for mongoose module
-// const userModel = mongoose.model("users", userSchema);
+// Create userModel for mongoose module
+const userModel = mongoose.model("users", userSchema);
 
 
-// const users = userModel
 
 
 // use body-parser
