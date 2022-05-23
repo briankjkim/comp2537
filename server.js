@@ -41,9 +41,9 @@ app.listen(process.env.PORT || 5000, function (err) {
 app.use(express.urlencoded({ extended: false }))
 app.use(flash())
 app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false
+  secret: 'hello',
+  resave: true,
+  saveUninitialized: true
 }))
 app.use(passport.initialize())
 app.use(passport.session())
@@ -159,8 +159,6 @@ function checkNotAuthenticated(req, res, next) {
     }
     next()
 }
-
-
 
 
 // Timeline Event Routes
