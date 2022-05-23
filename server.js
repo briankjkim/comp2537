@@ -4,11 +4,6 @@ const https = require('https');
 const mongoose = require('mongoose');
 const bodyparser = require("body-parser");
 const cors = require('cors');
-const passport = require("passport");
-const LocalStrategy = require("passport-local");
-const passportLocalMongoose = require("passport-local-mongoose");
-const User = require("./models/user");
-
 
 
 // Use Session Middleware for login component
@@ -17,14 +12,6 @@ app.use(require("express-session")({
     resave: false,
     saveUninitialized: false
 }));
-
-// use passport authentication middleware for node.js
-app.use(passport.initialize());
-app.use(passport.session());
- 
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
 
 
 
@@ -49,8 +36,6 @@ mongoose
     .connect(dbAddress, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        useCreateIndex: true,
-        useFindAndModify: true,
     })
     .then(() => console.log("MongoDB Connected"))
     .catch((err) => console.log(err));
@@ -66,6 +51,7 @@ const eventSchema = new mongoose.Schema({
 
 // Create eventModel for mongoose module
 const eventModel = mongoose.model("timelineevents", eventSchema);
+
 
 
 // // Create userSchema for user authentication
