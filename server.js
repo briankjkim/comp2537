@@ -48,7 +48,9 @@ const dbAddress = "mongodb+srv://kkjin0330:5VO1M61v9prYQEpp@cluster0.msyad.mongo
 mongoose
     .connect(dbAddress, {
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+        useFindAndModify: true,
     })
     .then(() => console.log("MongoDB Connected"))
     .catch((err) => console.log(err));
