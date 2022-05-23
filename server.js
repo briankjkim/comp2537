@@ -6,6 +6,30 @@ const bodyparser = require("body-parser");
 const cors = require('cors');
 
 
+const users = [
+    {
+        username : "user1",
+        password: "pass1",
+        shoppingCart:[
+            {
+                pokeID: 25,
+                price : 13,
+                quantity: 2
+            },{
+
+                pokeID: 35,
+                price : 40,
+                quantity: 5
+            }
+        ]
+        
+    },{
+
+        username : "user2",
+        password: "pass2"
+    }
+]
+
 // Use Session Middleware for login component
 app.use(require("express-session")({
     secret: "this course is a mess",
@@ -72,35 +96,6 @@ app.use(bodyparser.urlencoded({
     limit: '50mb',
     extended: true
 }));
-
-// Showing user profile page
-app.get("/userProfile", isLoggedIn, function (req, res) {
-    res.render("secret");
-});
-
-// Showing register form
-app.get("/register", function (req, res) {
-    res.render("register");
-});
-
-// Handling user signup
-app.post("/register", function (req, res) {
-    let username = req.body.username
-    let password = req.body.password
-    User.register(new User({ username: username }),
-            password, function (err, user) {
-        if (err) {
-            console.log(err);
-            return res.render("register");
-        }
- 
-        passport.authenticate("local")(
-            req, res, function () {
-            res.render("secret");
-        });
-    });
-});
-
 
 //Showing login form
 app.get("/login", function (req, res) {
