@@ -132,7 +132,7 @@ app.get('/login', checkNotAuthenticated, (req, res) => {
 
 // Handling login 
 app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-    successRedirect: '/',
+    successRedirect: '/index.html',
     failureRedirect: '/login',
     failureFlash: true
 }))
@@ -159,6 +159,15 @@ function checkNotAuthenticated(req, res, next) {
     }
     next()
 }
+
+
+// Show User Profile Page
+app.get('/userProfile/', checkAuthenticated, function (req, res) {
+    res.render('userProfile.ejs', {
+        username: req.session.user,
+    })
+})
+
 
 
 // Timeline Event Routes
